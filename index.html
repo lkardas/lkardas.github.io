@@ -1,2 +1,41 @@
-<h1>привет мир</h1>
-<a href="lkardas.github.io" >test</a>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Мои GitHub репозитории</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; }
+    h1 { text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 10px; border-bottom: 1px solid #ddd; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>окак</h1>
+  <ul id="repos"></ul>
+
+  <script>
+    const user = 'lkardas'
+    const ul = document.getElementById('repos')
+
+    fetch(`https://api.github.com/users/${user}/repos`)
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(repo => {
+          const li = document.createElement('li')
+          const a = document.createElement('a')
+          a.href = repo.html_url
+          a.target = '_blank'
+          a.textContent = repo.name
+          li.appendChild(a)
+          ul.appendChild(li)
+        })
+      })
+      .catch(() => {
+        ul.textContent = 'Ошибка при загрузке репозиториев'
+      })
+  </script>
+</body>
+</html>
